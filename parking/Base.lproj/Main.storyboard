@@ -99,15 +99,18 @@
                                             </switch>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="low-a7-Ted">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="low-a7-Ted">
                                         <rect key="frame" x="0.0" y="496" width="359" height="72.5"/>
                                         <state key="normal" title="Add Parking Lot"/>
+                                        <connections>
+                                            <segue destination="kZQ-x9-DE6" kind="unwind" unwindAction="unwindToViewController::" id="ZCT-su-Ftb"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQc-fz-pxn">
                                         <rect key="frame" x="0.0" y="578.5" width="359" height="72.5"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
-                                            <segue destination="kZQ-x9-DE6" kind="unwind" unwindAction="unwindToViewController:" id="wkd-aI-ZVP"/>
+                                            <action selector="cancelButtonPressed:" destination="7MA-K3-ESd" eventType="touchUpInside" id="dUW-w2-WZ2"/>
                                         </connections>
                                     </button>
                                 </subviews>
