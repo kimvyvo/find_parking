@@ -7,19 +7,37 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
 
 class ViewController: UIViewController {
+    
+    let lots = [ParkingLot]()
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    let saveContext = (UIApplication.shared.delegate as! AppDelegate).saveContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
+    
+    func fetchAllItems() {
+        // yeah
+    }
+    
+    @IBAction func unwindToViewController(_ segue: UIStoryboardSegue, _ sender: UIButton) {
+        let src = segue.source as! FormViewController
+        if sender.tag == 0 {
+            // cancel button pressed
+        } else if sender.tag == 1 {
+            // add button pressed
+        }
+    }
 
 }
 
