@@ -95,6 +95,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView!.image = resizedImage
             annotationView!.canShowCallout = true
+            let btn = UIButton(type: .detailDisclosure)
+            annotationView?.rightCalloutAccessoryView = btn
         } else {
             annotationView!.annotation = annotation
         }
@@ -102,11 +104,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return annotationView
     }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("tapped...")
+        print(view.annotation?.subtitle)
+        UIApplication.shared.openURL(NSURL(string: "tel://0000000000") as! URL) 
+    }
+    
     func pinOnMap(){
         print(parkingLots)
         for i in 0..<parkingLots.count{
             let spot = MKPointAnnotation()
-            print("pinMaps - \(parkingLots[i]["address"]! as! String)")
+            // print("pinMaps - \(parkingLots[i]["address"]! as! String)")
             spot.title = parkingLots[i]["address"]! as? String
             var isPublic: String = "N/A"
             if parkingLots[i]["isPublic"]! as! Int == 1 {
@@ -122,7 +130,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     func fetchFromApi(){
-        print("called Fetch API")
         let url = URL(string: "http://54.219.174.244/locations")
         // create a URLSession to handle the request tasks
         let session = URLSession.shared
@@ -214,6 +221,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    
     @IBAction func unwindToViewController(_ segue: UIStoryboardSegue) {
         let src = segue.source as! FormViewController
         let newParkingLot = ParkingLot(context: context)
@@ -231,7 +239,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             let initialLocation = CLLocation(latitude: lat, longitude: lon)
             self.centerMapOnLocation(location: initialLocation)
             // Ask for Authorisation from the User.
-            print("first... Lat: \(lat), Lon: \(lon)")
+            // print("first... Lat: \(lat), Lon: \(lon)")
             newParkingLot.address = src.addressTextField.text
             newParkingLot.totalSpots = Int64(src.totalSpotsTextField.text!)!
             newParkingLot.rate = src.rateTextField.text
@@ -289,32 +297,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             self.lots.append(newParkingLot)
         }
         
-        
-        
-        
-        
-        print(lots)
         saveContext()
     }
-    func convertAddressToCoordinates(address: String) -> [CLLocationDegrees]{
-        var geocoder = CLGeocoder()
-        var returnArr = [CLLocationDegrees]()
-        geocoder.geocodeAddressString(address) {
-            placemarks, error in
-            let placemark = placemarks?.first
-            var lat = CLLocationDegrees()
-            var lon = CLLocationDegrees()
-            lat = (placemark?.location?.coordinate.latitude)!
-            lon = (placemark?.location?.coordinate.longitude)!
-            //            print("Lat: \(lat), Lon: \(lon)")
-            let initialLocation = CLLocation(latitude: lat, longitude: lon)
-            self.centerMapOnLocation(location: initialLocation)
-            // Ask for Authorisation from the User.
-            
-        }
-        print(returnArr)
-        return returnArr
-    }
-    
+
 }
 
