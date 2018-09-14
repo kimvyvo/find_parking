@@ -32,9 +32,8 @@ class ViewController: UIViewController {
         do {
             let fetchedThings = try context.fetch(itemRequest)
             lots = fetchedThings
-            print("lots from fetch: ", lots)
         } catch {
-            print("fetch errors")
+            print("fetching errors")
         }
     }
     
@@ -50,7 +49,6 @@ class ViewController: UIViewController {
         
         lots.append(newParkingLot)
         saveContext()
-        print("lots from unwind: ", lots)
     }
 
 }
