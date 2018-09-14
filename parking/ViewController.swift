@@ -14,6 +14,7 @@ import MapKit
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var lots = [ParkingLot]()
+    var parkingLots = [NSDictionary]()
     
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -50,8 +51,77 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
 //        }
         print("view did load")
-        determineMyCurrentLocation()
         
+        determineMyCurrentLocation()
+        fetchAllItems()
+        fetchFromApi()
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        
+        return annotationView
+    }
+
+    func pinOnMap(){
+        print(parkingLots)
+        for i in 0..<parkingLots.count{
+            let spot = MKPointAnnotation()
+            print("pinMaps - \(parkingLots[i]["address"]! as! String)")
+            spot.title = parkingLots[i]["address"]! as! String
+            spot.coordinate = CLLocationCoordinate2D(latitude: parkingLots[i]["latitude"]! as! CLLocationDegrees, longitude: parkingLots[i]["longitude"]! as! CLLocationDegrees)
+            mapView.addAnnotation(spot)
+        }
+        
+    }
+    
+    func fetchFromApi(){
+        let url = URL(string: "http://54.219.174.244/locations")
+        // create a URLSession to handle the request tasks
+        let session = URLSession.shared
+        // create a "data task" to make the request and run the completion handler
+        let task = session.dataTask(with: url!, completionHandler: {
+            // see: Swift closure expression syntax
+            data, response, error in
+            do {
+                // try converting the JSON object to "Foundation Types" (NSDictionary, NSArray, NSString, etc.)
+                if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    if let results = jsonResult["data"] {
+                        let resultsArray = results as! NSArray
+                        for item in resultsArray {
+                            let i = item as! NSDictionary
+                            self.parkingLots.append(i)
+                        }
+                        // now we can run NSArray methods like count and firstObject
+//                        print(resultsArray.value(forKey: "latitude"))
+//                        print(resultsArray.value(forKey: "longitude"))
+                        //                        print(resultsArray.value(forKey: "name"))
+                        //                        self.people = resultsArray.value(forKey: "name") as! [String]
+                        //                        print(resultsArray.firstObject)
+//                        print(self.parkingLots.value(forKey: "address"))
+                       
+                        DispatchQueue.main.async {
+                            self.pinOnMap()
+                        }
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        })
+        // execute the task and wait for the response before
+        // running the completion handler. This is async!
+        task.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {
