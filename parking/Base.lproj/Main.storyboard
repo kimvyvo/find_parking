@@ -138,7 +138,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQc-fz-pxn">
                                         <rect key="frame" x="0.0" y="567" width="335" height="50"/>
-                                        <color key="backgroundColor" red="0.32857020339999998" green="0.50260082559999997" blue="0.60369769890000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.78764028289578591" green="0.86292835549297786" blue="0.91610485406091369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="m3u-nZ-QYH"/>
                                         </constraints>
