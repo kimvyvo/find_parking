@@ -89,6 +89,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     func fetchFromApi(){
+        print("called Fetch API")
         let url = URL(string: "http://54.219.174.244/locations")
         // create a URLSession to handle the request tasks
         let session = URLSession.shared
@@ -126,13 +127,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // running the completion handler. This is async!
         task.resume()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
-    }
-
+  
     func determineMyCurrentLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -203,33 +198,59 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             newParkingLot.details = src.detailsTextField.text
             newParkingLot.isPublic = src.isPublicSwitch.isOn
             
+            let parameters = ["address": newParkingLot.address, "num_spots": newParkingLot.totalSpots, "rate": newParkingLot.rate, "contact":newParkingLot.contact, "details": newParkingLot.details, "isPublic": newParkingLot.isPublic, "latitude":lat, "longitude": lon] as [String : Any]
+            
+            //create the url with URL
+            let url = URL(string: "http://54.219.174.244/locations")! //change the url
+            
+            //create the session object
+            let session = URLSession.shared
+            
+            //now create the URLRequest object using the url object
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST" //set http method as POST
+            
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            //create dataTask using the session object to send data to the server
+            let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+                
+                guard error == nil else {
+                    return
+                }
+                
+                guard let data = data else {
+                    return
+                }
+                
+                do {
+                    //create json object from data
+                    if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
+                        print(json)
+                        // handle json...
+                    }
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+                self.fetchFromApi()
+            })
+            task.resume()
+            
+            
             
             self.lots.append(newParkingLot)
         }
         
         
-//        
-//        let url = URL(string: "http://54.219.174.244/locations")!
-//        var request = URLRequest(url: url)
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.httpMethod = "POST"
-//        let postString = "address=\(newParkingLot.address)&num_spots=\(newParkingLot.totalSpots as! Int)&num_spots=\(newParkingLot.rate)&contact=\(newParkingLot.contact)&description=\(newParkingLot.details)&isPublic=\(newParkingLot.isPublic)"
-//        request.httpBody = postString.data(using: .utf8)
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-//                print("error=\(error)")
-//                return
-//            }
-//
-//            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-//                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-//                print("response = \(response)")
-//            }
-//
-//            let responseString = String(data: data, encoding: .utf8)
-//            print("responseString = \(responseString)")
-//        }
-//        task.resume()
+        
+        
         
         print(lots)
         saveContext()
