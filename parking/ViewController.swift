@@ -11,7 +11,7 @@ import CoreData
 import CoreLocation
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     var lots = [ParkingLot]()
     var parkingLots = [NSDictionary]()
@@ -66,10 +66,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView!.canShowCallout = true
+            annotationView!.image = UIImage(named:"pin")
         } else {
             annotationView!.annotation = annotation
         }
-        
         return annotationView
     }
 
