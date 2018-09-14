@@ -12,7 +12,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
-    let lots = [ParkingLot]()
+    var lots = [ParkingLot]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchAllItems()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,16 +28,29 @@ class ViewController: UIViewController {
     }
     
     func fetchAllItems() {
-        // yeah
+        let itemRequest:NSFetchRequest<ParkingLot> = ParkingLot.fetchRequest()
+        do {
+            let fetchedThings = try context.fetch(itemRequest)
+            lots = fetchedThings
+            print("lots from fetch: ", lots)
+        } catch {
+            print("fetch errors")
+        }
     }
     
     @IBAction func unwindToViewController(_ segue: UIStoryboardSegue) {
         let src = segue.source as! FormViewController
-//        if sender.tag == 0 {
-//            // cancel button pressed
-//        } else if sender.tag == 1 {
-//            // add button pressed
-//        }
+        let newParkingLot = ParkingLot(context: context)
+        newParkingLot.address = src.addressTextField.text
+        newParkingLot.totalSpots = Int64(src.totalSpotsTextField.text!)!
+        newParkingLot.rate = src.rateTextField.text
+        newParkingLot.contact = src.contactTextField.text
+        newParkingLot.details = src.detailsTextField.text
+        newParkingLot.isPublic = src.isPublicSwitch.isOn
+        
+        lots.append(newParkingLot)
+        saveContext()
+        print("lots from unwind: ", lots)
     }
 
 }

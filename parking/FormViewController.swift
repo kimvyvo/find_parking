@@ -10,11 +10,17 @@ import UIKit
 
 class FormViewController: UIViewController {
 
+    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var totalSpotsTextField: UITextField!
+    @IBOutlet weak var rateTextField: UITextField!
+    @IBOutlet weak var contactTextField: UITextField!
+    @IBOutlet weak var detailsTextField: UITextField!
+    @IBOutlet weak var isPublicSwitch: UISwitch!
+    
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         print("cancel")
         dismiss(animated: true, completion: nil)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
