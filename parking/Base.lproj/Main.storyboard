@@ -58,7 +58,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pPy-5C-WYT">
                                 <rect key="frame" x="20" y="30" width="335" height="617"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGA-dL-I8R">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address (Street, City State Zip)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGA-dL-I8R">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="qJK-8P-dQF"/>
@@ -67,7 +67,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Spaces" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-ad-3zr">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Spots" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-ad-3zr">
                                         <rect key="frame" x="0.0" y="60" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ck8-jB-0Vt"/>
