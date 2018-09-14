@@ -40,6 +40,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="map" destination="sDp-m4-Gay" id="QfK-E2-TBk"/>
                         <outlet property="mapView" destination="sDp-m4-Gay" id="98h-E2-Ci1"/>
                     </connections>
                 </viewController>
@@ -58,8 +59,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pPy-5C-WYT">
                                 <rect key="frame" x="20" y="30" width="335" height="617"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-hs-eY2">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="122"/>
+                                    </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address (Street, City State Zip)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGA-dL-I8R">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="132" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="qJK-8P-dQF"/>
                                         </constraints>
@@ -68,7 +72,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Spots" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-ad-3zr">
-                                        <rect key="frame" x="0.0" y="60" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="192" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ck8-jB-0Vt"/>
                                         </constraints>
@@ -77,7 +81,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Rate (e.g. $5/hr)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7bM-OY-tIz">
-                                        <rect key="frame" x="0.0" y="120" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="252" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="R68-v3-42i"/>
                                         </constraints>
@@ -86,7 +90,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contact (e.g. phone, email)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HpZ-HI-sCh">
-                                        <rect key="frame" x="0.0" y="180" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="312" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="DxI-At-88p"/>
                                         </constraints>
@@ -95,7 +99,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Details " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-a3-Cu3">
-                                        <rect key="frame" x="0.0" y="240" width="335" height="75"/>
+                                        <rect key="frame" x="0.0" y="372" width="335" height="75"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="g8S-fy-BmN"/>
                                         </constraints>
@@ -104,7 +108,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kED-kn-jIL">
-                                        <rect key="frame" x="0.0" y="325" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="457" width="335" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Public" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTq-FK-QGU">
                                                 <rect key="frame" x="0.0" y="0.0" width="157.5" height="30"/>
@@ -123,7 +127,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ApO-Pe-L3Q">
-                                        <rect key="frame" x="0.0" y="365" width="335" height="132"/>
+                                        <rect key="frame" x="0.0" y="497" width="335" height="0.0"/>
                                     </stackView>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="low-a7-Ted">
                                         <rect key="frame" x="0.0" y="507" width="335" height="50"/>
@@ -200,4 +204,7 @@
             <point key="canvasLocation" x="116" y="776.76161919040487"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="car" width="256" height="256"/>
+    </resources>
 </document>

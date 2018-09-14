@@ -16,6 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var lots = [ParkingLot]()
     var parkingLots = [NSDictionary]()
     
+    @IBOutlet weak var map: MKMapView!
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -25,6 +26,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     let regionRadius: CLLocationDistance = 1000
     
     var locationManager: CLLocationManager!
+    
+    let manager = CLLocationManager()
     
     
     @IBOutlet weak var mapView: MKMapView!
@@ -56,22 +59,46 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         determineMyCurrentLocation()
         fetchAllItems()
         fetchFromApi()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
         
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
+        if annotation is MKPointAnnotation {
+            // good
+        } else if annotation is MKUserLocation {
+            let pin = map.view(for: annotation) ?? MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            
+            let pinImage = UIImage(named: "mycar")
+            let size = CGSize(width: 70, height: 70)
+            UIGraphicsBeginImageContext(size)
+            pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            
+            pin.image = resizedImage
+            return pin
+        } else { return nil }
         
         let identifier = "Annotation"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
+        let pinImage = UIImage(named: "pin")
+        let size = CGSize(width: 40, height: 40)
+        UIGraphicsBeginImageContext(size)
+        pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.image = resizedImage
             annotationView!.canShowCallout = true
-            annotationView!.image = UIImage(named:"pin")
         } else {
             annotationView!.annotation = annotation
         }
+        
         return annotationView
     }
     
@@ -80,8 +107,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         for i in 0..<parkingLots.count{
             let spot = MKPointAnnotation()
             print("pinMaps - \(parkingLots[i]["address"]! as! String)")
-            spot.title = parkingLots[i]["address"]! as! String
-            spot.subtitle = " Contact: \(parkingLots[i]["contact"]!). Rate: $\(parkingLots[i]["rate"]!)/hr"
+            spot.title = parkingLots[i]["address"]! as? String
+            var isPublic: String = "N/A"
+            if parkingLots[i]["isPublic"]! as! Int == 1 {
+                isPublic = "Yes"
+            } else {
+                isPublic = "No"
+            }
+            spot.subtitle = "Spots: \(parkingLots[i]["num_spots"]!), Contact: \(parkingLots[i]["contact"]!), Rate: $\(parkingLots[i]["rate"]!)/hr"
             spot.coordinate = CLLocationCoordinate2D(latitude: parkingLots[i]["latitude"]! as! CLLocationDegrees, longitude: parkingLots[i]["longitude"]! as! CLLocationDegrees)
             mapView.addAnnotation(spot)
         }
@@ -146,17 +179,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0] as CLLocation
+//        let userLocation: CLLocation = locations[0] as CLLocation
+//
+//        // Call stopUpdatingLocation() to stop listening for location updates,
+//        // other wise this function will be called every time when user location changes.
+//
+//        // manager.stopUpdatingLocation()
+//
+////        print("user latitude = \(userLocation.coordinate.latitude)")
+////        print("user longitude = \(userLocation.coordinate.longitude)")
+//        let initialLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+//        centerMapOnLocation(location: initialLocation)
         
-        // Call stopUpdatingLocation() to stop listening for location updates,
-        // other wise this function will be called every time when user location changes.
+        let location = locations[0]
+        let span: MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        let myLocation: CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        map.setRegion(region, animated: true)
+        self.map.showsUserLocation = true
         
-        // manager.stopUpdatingLocation()
-        
-//        print("user latitude = \(userLocation.coordinate.latitude)")
-//        print("user longitude = \(userLocation.coordinate.longitude)")
-        let initialLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        centerMapOnLocation(location: initialLocation)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
@@ -253,6 +294,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         print(returnArr)
         return returnArr
     }
-
+    
 }
 

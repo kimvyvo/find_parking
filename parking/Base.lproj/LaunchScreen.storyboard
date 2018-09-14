@@ -17,13 +17,43 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.32857020339999998" green="0.50260082559999997" blue="0.60369769890000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car" translatesAutoresizingMaskIntoConstraints="NO" id="aGM-2L-Yz8">
+                                <rect key="frame" x="59" y="205" width="256" height="256"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDa-mN-yT1">
+                                <rect key="frame" x="0.0" y="123" width="375" height="82.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="69"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARKING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWA-7c-hgv">
+                                <rect key="frame" x="0.0" y="461.5" width="375" height="83"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="69"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.78764028289999999" green="0.86292835550000002" blue="0.91610485409999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oDa-mN-yT1" secondAttribute="trailing" id="3me-iF-8ej"/>
+                            <constraint firstItem="aGM-2L-Yz8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6Ha-l9-byF"/>
+                            <constraint firstItem="WWA-7c-hgv" firstAttribute="top" secondItem="aGM-2L-Yz8" secondAttribute="bottom" constant="0.5" id="MDx-xc-8bg"/>
+                            <constraint firstItem="aGM-2L-Yz8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aHh-GK-ZDq"/>
+                            <constraint firstItem="aGM-2L-Yz8" firstAttribute="top" secondItem="oDa-mN-yT1" secondAttribute="bottom" constant="-0.5" id="hkM-QJ-Es6"/>
+                            <constraint firstAttribute="trailing" secondItem="WWA-7c-hgv" secondAttribute="trailing" id="i80-WF-eH5"/>
+                            <constraint firstItem="WWA-7c-hgv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sWE-kE-ZsG"/>
+                            <constraint firstItem="oDa-mN-yT1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tXv-5M-1qT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="car" width="256" height="256"/>
+    </resources>
 </document>
